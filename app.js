@@ -1,14 +1,73 @@
 const express = require('express');
 const app = express();
 const http = require('http')
-const bodyParser = require("body-parser")
+// const bodyParser = require("body-parser")
+const path = require('path');
+const logger = require("morgan")
+
+
+//for authentication
+const router = require('./routes/index');
+const { auth } = require('express-openid-connect');
+const dotenv = require('dotenv');
+
+dotenv.config();
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+
+const config = {
+    authRequired: false,
+    auth0Logout: true
+  };
+
+  const port = process.env.PORT || 3000;
+if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.NODE_ENV !== 'production') {
+  config.baseURL = `http://localhost:${port}`;
+}
+
+app.use(auth(config));
+
+// Middleware to make the `user` object available for all views
+app.use(function (req, res, next) {
+  res.locals.user = req.oidc.user;
+  next();
+});
+
+app.use('/login', router);
+
+// Catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+// Error handlers
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: process.env.NODE_ENV !== 'production' ? err : {}
+  });
+});
+
+
+//authetication end
+
+
+app.use(express.json());       
+app.use(express.urlencoded({extended: true})); 
+app.use(logger('dev'))
+
 
 app.get("/", function(req, res){
     res.json({"Users" : ["UserOne", "UserTwo"]})
 })
 
-app.use(express.json());       
-app.use(express.urlencoded({extended: true})); 
 
 app.post("/", function(req, res){
 
@@ -19,6 +78,9 @@ app.post("/", function(req, res){
     for(let i=0;i<products.length;i++){
         if(reqItem.toLowerCase() === products[i]){
             isPresent = 1;
+            res.status = 200;
+            var str = encodeURIComponent(reqItem);
+            res.redirect('/products/' + str);
         }
     }
 
@@ -29,9 +91,17 @@ app.post("/", function(req, res){
     res.json({"Product Status" : isPresent})
 })
 
+app.get("/product", function(req, res){
+    res.end("OK")
+})
 
+app.get('/login', function(req, res){
+    console.log("Login hkj")
+    res.end("OK")
+})
 
-http.createServer(app).listen(3001, function(){
-    console.log("Server stared on port 3001");
+http.createServer(app).listen(3000, function(){
+    console.log("Server stared on port 3000");
+    
 })
 
