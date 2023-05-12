@@ -3,8 +3,8 @@ import React from "react";
 
 function SearchBar(props){
     return(
-        <form encType="multipart/form-data" method="post">
-          <input type="search" id="search-bar" placeholder="Search for a product"></input> 
+        <form method="POST" action="/">
+          <input type="search" id="search-bar" placeholder="Search for a product" name="itemName"></input> 
           <button type="submit" id="search-btn">Search</button> 
         </form>
     )

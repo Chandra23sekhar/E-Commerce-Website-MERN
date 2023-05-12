@@ -1,4 +1,5 @@
 import React from "react";
+
 import crossMark from '../assets/x-lg.svg'
 
 function OrderDeclined (){

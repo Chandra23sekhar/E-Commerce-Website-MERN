@@ -1,4 +1,5 @@
 import React from "react";
+
 import checkMark from '../assets/check2.svg'
 
 function OrderPlacedSuccessfully (){
