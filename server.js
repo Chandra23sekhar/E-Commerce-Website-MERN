@@ -61,7 +61,9 @@ app.use(logger('dev'))
 
 
 app.get("/", function(req, res){
-  res.json({"Logged In" : req.oidc.isAuthenticated()})
+  res.json({"Logged In" : req.oidc.isAuthenticated(),
+      "User Details" : req.oidc.user
+  })
 })
 
 
@@ -86,6 +88,21 @@ app.post("/", function(req, res){
 
     res.json({"Product Status" : isPresent})
 })
+
+
+//for settings update
+app.post("/settingsUpdate", function(req, res){
+  var fullName = req.body.fullName;
+  var emailAddr = req.body.usrEmail;
+  var addrLine1 = req.body.addr1;
+  var addrLine2 = req.body.addr2;
+  var mobNo = req.body.usrPhNo;
+  var pic = req.body.profPic; // implement uploading profile pictures
+
+  res.json({"Received Req" : "OK", "Full Name" : fullName, "Email Address" : emailAddr, "Address Line 1" : addrLine1, "Address Line 2" : addrLine2, "Mobile Number" : mobNo, "Prof Pic" : pic});
+
+})
+
 
 app.get("/product", function(req, res){
     res.end("OK")
