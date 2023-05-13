@@ -3,19 +3,29 @@ const express = require('express');
 const http = require('http');
 const logger = require('morgan');
 const path = require('path');
+const bodyParser = require('body-parser')
 const router = require('./routes/index');
 const { auth } = require('express-openid-connect');
+const multer = require('multer')
+const cors = require('cors')
 
 dotenv.load();
 
 const app = express();
 
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static('uploads'));
+// app.use(express.json());       
+// app.use(express.urlencoded({extended: true})); 
+// app.use(logger('dev'))
 
 const config = {
   authRequired: false,
@@ -55,9 +65,7 @@ app.use(function (err, req, res, next) {
 
 
 //MY code
-app.use(express.json());       
-app.use(express.urlencoded({extended: true})); 
-app.use(logger('dev'))
+
 
 
 app.get("/", function(req, res){
@@ -90,17 +98,37 @@ app.post("/", function(req, res){
 })
 
 
+
+//Handling form data with multer
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+      cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+      console.log(file);
+      cb(null , file.originalname );
+  }
+});
+
+const upload = multer({ storage: storage })
+
 //for settings update
-app.post("/settingsUpdate", function(req, res){
+app.post("/settingsUpdate", upload.single('profPic'), function(req, res){
   var fullName = req.body.fullName;
   var emailAddr = req.body.usrEmail;
   var addrLine1 = req.body.addr1;
   var addrLine2 = req.body.addr2;
+  var pinCode = req.body.pincode;
   var mobNo = req.body.usrPhNo;
-  var pic = req.body.profPic; // implement uploading profile pictures
-
-  res.json({"Received Req" : "OK", "Full Name" : fullName, "Email Address" : emailAddr, "Address Line 1" : addrLine1, "Address Line 2" : addrLine2, "Mobile Number" : mobNo, "Prof Pic" : pic});
-
+  // var pic = req.body.filename; // implement uploading profile pictures
+  console.log(req.body);  
+  res.json({"Received Req" : "OK", "Full Name" : fullName, 
+  "Email Address" : emailAddr, 
+  "Address Line 1" : addrLine1, 
+  "Address Line 2" : addrLine2, 
+  "Pincode" : pinCode,
+  "Mobile Number" : mobNo, 
+  "Prof Pic" : pic});
 })
 
 
@@ -112,6 +140,25 @@ app.get('/login', function(req, res){
     console.log("Login hkj")
     res.end("OK")
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
