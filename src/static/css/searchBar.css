@@ -1,0 +1,23 @@
+
+/*Search Bar*/
+
+#search-bar{
+    width: 200px;
+    height: 20px;
+    border-radius: 0.5em 0px 0px 0.5em;
+    border: none;
+    outline: none;
+    background-color: #DDDDDD;
+    margin-right: none;
+    padding: 0px 5px 0px 5px;
+  }
+  
+  #search-btn{
+    margin-left: none;
+    cursor: pointer;
+    height: 20px;
+    border: none;
+    outline: none;
+    border-radius: 0px 0.5em 0.5em 0px;
+  }
+  

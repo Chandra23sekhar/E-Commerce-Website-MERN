@@ -1,4 +1,5 @@
 import React from "react";
+import styles from '../static/css/cart.css'
 import macbook from '../assets/mac-sm-2.jpeg'
 import samTv from '../assets/samsungtv.jpeg'
 

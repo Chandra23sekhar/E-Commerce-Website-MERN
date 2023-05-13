@@ -1,0 +1,66 @@
+
+/*PreSettingsPage*/
+
+#ps-main{
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    /* height: fit-content; */
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  #ps-main>h1{
+    position: relative;
+    color: black;
+  }
+  
+  .all-seetings-cont{
+    position: absolute;
+    top: 100px;
+    height: auto;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 5px;
+  }
+  
+  .settings-card{
+    height: 150px;
+    width: 400px;
+    border-radius: 1em;
+    background-color: #DDDDDD;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    margin: 20px;
+    color: black;
+    padding: 10px;
+  }
+  
+  .settings-img{
+    height: 120px;
+    width: 120px;
+  }
+
+
+  @media screen and (max-width: 1000px){
+    /*PreSettings Page*/
+
+    /*NOT WORKING!!!!!!!!*/
+
+  .all-settings-cont{
+    flex-direction: column;
+  }
+
+  /*Presetings*/
+  #ps-main{
+    height: 100vh;
+    width: 100vw;
+    overflow-x: scroll;
+  }
+  }

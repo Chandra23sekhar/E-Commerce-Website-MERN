@@ -1,0 +1,127 @@
+#odr-con-main{
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 90vw;
+    /* height: fit-content; */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.odr-con-outer-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly ;
+}
+
+.odr-con-usr-det{
+    width: 50%;
+    height: fit-content;
+    padding: 10px;
+    justify-content: center;
+}
+
+.odr-con-del-det{
+    height: 150px;
+    width: 90%;
+    padding: 5px;
+    background-color: #ddd;
+    align-self: center;
+    margin: 10px;
+    border-radius: 1em;
+}
+
+.odr-con-xyz{
+    font-size: 2em;
+}
+
+.odr-con-del-date{
+    height: 150px;
+    width: 90%;
+    padding: 5px;
+    background-color: #ddd;
+    align-self: center;
+    margin: 10px;
+    border-radius: 1em;
+}
+
+.odr-con-payment-type{
+    height: 400px;
+    width: 90%;
+    padding: 5px;
+    background-color: #ddd;
+    align-self: center;
+    margin: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1em;
+}
+
+.odr-con-payment-type>p{
+    font-size: 2em;
+}
+
+
+.odr-con-pay-cont{
+    height: 70px;
+    width: 90%;
+    background-color: #088395;
+    align-self: center;
+    border-radius: 0.3em;
+    line-height: 70px;
+    font-size: 1.5em;
+    margin: 10px 0px 10px 0px;
+}
+
+.odr-con-odr-det{
+    width: 40%;
+    border: 3px solid black;
+    height: fit-content;
+    padding: 10px;
+    justify-content: center;
+    background-color: #ddd;
+    border-radius: 0.5em;
+    margin: 10px;
+}
+
+.odr-con-odr-sum{
+    margin-bottom: 150px; 
+}
+
+.odr-con-sep{
+    height: 5px;
+    list-style: dashed;
+    margin: 20px 0px 20px 0px;
+}
+
+.odr-con-row1{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.odr-con-table{
+    width: 100%;
+}
+
+.odr-con-table>tr>td{
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 1000px){
+    .odr-con-outer-cont{
+        flex-direction: column-reverse;
+    }
+}

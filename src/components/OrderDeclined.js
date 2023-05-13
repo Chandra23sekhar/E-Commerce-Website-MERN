@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from '../static/css/orderDeclined.css'
 import crossMark from '../assets/x-lg.svg'
 
 function OrderDeclined (){

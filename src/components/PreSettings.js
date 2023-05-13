@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../static/css/settings.css'
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 

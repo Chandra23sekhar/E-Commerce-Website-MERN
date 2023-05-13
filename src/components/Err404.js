@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from '../static/css/err404.css'
 
 function Err404(){
     return(

@@ -7,6 +7,7 @@ import cart from './assets/cart.svg'
 //Import all components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import OrderConfirmation from './components/OrderConfirmation';
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
     <div className="App">
       
       <Navbar></Navbar>
-      
+      {/* <OrderConfirmation /> */}
       {/* <Footer></Footer> */}
 
 

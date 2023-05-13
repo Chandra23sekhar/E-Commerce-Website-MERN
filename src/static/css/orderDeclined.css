@@ -1,0 +1,16 @@
+.circle-red{
+    border-radius: 50%;
+    height: 300px;
+    width: 300px;
+    align-self: center;
+    background-color: #FF6969;
+  }
+  
+  #crs-mrk{
+    position: relative;
+    height: 200px;
+    width: 200px;
+    top: 20%;
+    left: 0%;
+  }
+  

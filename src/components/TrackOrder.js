@@ -1,4 +1,5 @@
 import React from "react";
+import styles from '../static/css/trackOrder.css'
 import macbook from '../assets/mac-sm-2.jpeg'
 
 function TrackOrder(){

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from '../static/css/orderPlaced.css'
 
 import checkMark from '../assets/check2.svg'
 
