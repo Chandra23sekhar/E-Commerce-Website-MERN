@@ -8,11 +8,24 @@ const router = require('./routes/index');
 const { auth } = require('express-openid-connect');
 const multer = require('multer')
 const cors = require('cors')
-
+const mongoose = require("mongoose");
 dotenv.load();
 
 const app = express();
 
+
+//Connect to a database
+mongoose.connect("mongodb://localhost:27017/ECommerceDev",  {useNewUrlParser : true, useUnifiedTopology : true}).then(
+  () => {
+    console.log("[*] Connected to database successfully.")
+  }
+).catch((err) => {
+  console.log(err)
+})
+
+//Connection to mongo client
+const db = mongoose.connection;
+var user_details = db.collection("user_details");// create a new collection
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,9 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('uploads'));
-// app.use(express.json());       
-// app.use(express.urlencoded({extended: true})); 
-// app.use(logger('dev'))
+
 
 const config = {
   authRequired: false,
@@ -47,13 +58,6 @@ app.use(function (req, res, next) {
 
 app.use('/login', router);
 
-// Catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   const err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
 // Error handlers
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
@@ -65,9 +69,6 @@ app.use(function (err, req, res, next) {
 
 
 //MY code
-
-
-
 app.get("/", function(req, res){
   res.json({"Logged In" : req.oidc.isAuthenticated(),
       "User Details" : req.oidc.user
@@ -120,16 +121,25 @@ app.post("/settingsUpdate", upload.single('profPic'), function(req, res){
   var addrLine2 = req.body.addr2;
   var pinCode = req.body.pincode;
   var mobNo = req.body.usrPhNo;
-  // var pic = req.body.filename; // implement uploading profile pictures
-  console.log(req.body);  
-  res.json({"Received Req" : "OK", "Full Name" : fullName, 
-  "Email Address" : emailAddr, 
-  "Address Line 1" : addrLine1, 
-  "Address Line 2" : addrLine2, 
-  "Pincode" : pinCode,
-  "Mobile Number" : mobNo, 
-  "Prof Pic" : pic});
+
+  //Inserting the user details to the database
+
+    var new_user_det = {"fullName" : fullName, "emailAddr" : emailAddr, "addrLine1" : addrLine1, "addrLine2" : addrLine2, "pinCode" : pinCode, "mobNo" : mobNo}
+    user_details.insertOne(new_user_det, (err, result) => {
+    if (err) {
+      
+      res.status(500).json({ err: err })
+      return
+    }
+    console.log(result)
+    res.status(200);
+    res.redirect("/userdetails")
+    
+  })
+
+
 })
+
 
 
 app.get("/product", function(req, res){
