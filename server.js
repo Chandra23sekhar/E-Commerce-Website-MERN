@@ -26,6 +26,7 @@ mongoose.connect("mongodb://localhost:27017/ECommerceDev",  {useNewUrlParser : t
 //Connection to mongo client
 const db = mongoose.connection;
 var user_details = db.collection("user_details");// create a new collection
+var inventory = db.collection("Product_Inventory");
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -79,6 +80,18 @@ app.get("/", function(req, res){
 app.post("/", function(req, res){
 
     const products = ["iphone 12", "oneplus 9", "macbook pro", "samsung tv"];
+
+
+    //Query Database to get all products
+    user_details.find({}, function(err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result['fullName']);
+      }
+    });
+
+
     var reqItem = req.body.itemName;
     var isPresent = 0;
 
