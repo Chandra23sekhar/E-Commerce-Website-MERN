@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 import hamburger from '../assets/list.svg'
 import cross from '../assets/x-circle.svg'
 import SearchBar from "./SearchBar";
@@ -41,16 +42,21 @@ function showNav(){
    
 
 function Navbar(){
+
+    const {loginWithPopup, loginWithRedirect, logout, user, isAuthenticated} = useAuth0()
+
+
     return(
         
         <Router>
             <div className="navbar">
                 <h2>E-Commerce</h2> 
-                        
+                <h3>{isAuthenticated ? 'yes' : 'no'}</h3>
                         <ul className="nav-list">
+                        
                         <div className="nav-items" id="nav-items">
                         <SearchBar></SearchBar>
-                            <li><Link to="/login" className="nav-link">Login</Link></li>
+                            <li><button onClick={loginWithPopup}>Login</button></li>
                             <li><Link to="/" className="nav-link">Home</Link></li>
                             <li><Link to="/cart" className="nav-link"><img src={cart} alt="Cart"></img></Link></li>
                             <li><Link to="/settings" className="nav-link"><img src={personFill} alt="Profile Picture"></img></Link></li>
@@ -66,7 +72,7 @@ function Navbar(){
                                 <Route exact path='/previousorders' element={<PreviousOrders />}></Route>
                                 <Route exact path='/trackyourorder' Component={TrackOrder}></Route>
                                 <Route path="*" element={<Err404 />} />
-                                <Route exact path='/logout' element={<Logout />}></Route>
+                                <Route path='/logout' onClick={logout} element={<Logout />}></Route>
                             </Routes>
                             
 
@@ -78,6 +84,7 @@ function Navbar(){
                 </ul>
                 
             </div>
+            
         </Router>
        
     )
