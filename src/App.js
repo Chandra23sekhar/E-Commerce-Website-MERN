@@ -10,15 +10,17 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BuyNow from './components/BuyNow';
 import OrderConfirmation from './components/OrderConfirmation';
+import HomePage from './components/HomePage';
 
 
 function App() {
   return (
     <div className="App">
       
-      <Navbar></Navbar>
+      {/* <Navbar /> */}
+      {/* <HomePage></HomePage> */}
       {/* <BuyNow></BuyNow> */}
-      {/* <OrderConfirmation /> */}
+      <OrderConfirmation />
       {/* <Footer></Footer> */}
 
 

@@ -2,6 +2,8 @@ import React from "react";
 import styles from '../static/css/cart.css'
 import macbook from '../assets/mac-sm-2.jpeg'
 import samTv from '../assets/samsungtv.jpeg'
+import { Link } from "react-router-dom";
+import BuyNow from "./BuyNow";
 
 
 function Cart(){
@@ -22,7 +24,7 @@ function Cart(){
                     <img src={samTv} alt="product image" className="cart-item-img"></img>
                 </div>
 
-                <button id="chk-out-btn">CHECKOUT</button>
+                <button id="chk-out-btn"><Link to="/orderconfirmation">Checkout</Link></button>
             </div>
 
         </main>

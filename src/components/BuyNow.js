@@ -5,7 +5,15 @@ import macMini1 from '../assets/mac-mini-1.jpeg'
 import macMini2 from '../assets/mac-mini-2.jpeg'
 import macMini3 from '../assets/mac-mini-3.jpeg'
 import styles from '../static/css/buyNow.css'
-
+import ps5 from '../assets/ps5.jpg'
+import ps5_sm_1 from '../assets/ps5-sm-2.jpeg'
+import ps5_sm_2 from '../assets/ps5-sm-3.jpeg'
+import mouse_main from '../assets/logitech-mouse.jpg_large'
+import mouse_sm_1 from '../assets/logitech-mouse-sm-1.jpeg'
+import mouse_sm_2 from '../assets/logitech-mouse-main.jpg'
+import keyboard_main from '../assets/keyboard-main.jpg'
+import keyboard_sm_1 from '../assets/keyboard-sm-1.jpg'
+import keyboard_sm_2 from '../assets/keyboard-sm-2.jpg'
 
 const changeMainImg = () => {
     console.log("hello") 
@@ -41,4 +49,4 @@ const BuyNow = () => {
     )
 }
 
-export default BuyNow
+export default BuyNow;

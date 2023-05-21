@@ -1,7 +1,11 @@
 /*Cart*/
 
+body{overflow: hidden;}
+
 #cart-main{
-    position: absolute;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
     top: 100px;
     left: 0px;
     /* height: fit-content; */
@@ -9,13 +13,14 @@
     display: flex;
     color: black;
     flex-direction: column;
+
   }
   
   .cart-contents{
     position: relative;
-    top: 50%;
-    left: 50%;
-    height: 70vh;
+    top: 0%;
+    left: 20%;
+    height: 65vh;
     width: 50vw;
     background-color: #DDDDDD;
     border-radius: 1em;
@@ -67,21 +72,31 @@
 
   #cart-main{
     position: relative;
-    top: 100px;
+    top: 200px;
     padding: 0px;
+    z-index: 999;
+  }
+
+  h1{
+    display: none;
   }
 
   .cart-contents{
+    /* top: 0px; */
+    position: relative;
     height: fit-content;
     width: 99vw;
     top: 0px;
     left: 0px;
+    padding: 20px;
+    
   }
 
   .cart-item-card{
     margin: 10px;
     flex-direction: column;
     height: auto;
+    z-index: 9999;
   }
 
   }

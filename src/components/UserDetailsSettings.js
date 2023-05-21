@@ -7,7 +7,7 @@ export default function UserDetailsSettings() {
    <main id='usr-set-main'>
 		<h1>Your Details</h1>
 		<div className='usr-set-outer'>
-			<form method='post' action='/settingsUpdate' encType='multipart/form-data'>
+			<form method='post' action=' settingsUpdate' encType='multipart/form-data'>
 				<div className='prof-pic-cls'>
 					<input type='file' placeholder="upload an image" className='prof-pic' name='profPic'></input>
 				</div>
