@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { all } = require('./routes');
 
 // Create an instance of Express.js
 const app = express();
@@ -9,7 +10,7 @@ const port = 3000;
 
 // MongoDB connection URI and database name
 const uri = 'mongodb://localhost:27017';
-const dbName = 'mydatabase';
+const dbName = 'ECommerceDev';
 
 // Connect to MongoDB using Mongoose
 mongoose.connect(`${uri}/${dbName}`, {
@@ -18,19 +19,23 @@ mongoose.connect(`${uri}/${dbName}`, {
 });
 
 // Create a Mongoose Schema
-const exampleSchema = new mongoose.Schema({
-  name: {
+const Product_Inventory = new mongoose.Schema({
+  productName: {
     type: String,
     required: true,
   },
-  age: {
+  productPrice: {
+    type: Number,
+    required: true,
+  },
+  productQty: {
     type: Number,
     required: true,
   },
 });
 
 // Create a Mongoose Model
-const Example = mongoose.model('Example', exampleSchema);
+const products = mongoose.model('products', Product_Inventory);
 
 // Middleware to parse JSON data
 app.use(bodyParser.json());
@@ -50,8 +55,8 @@ app.post('/data', async (req, res) => {
 // Create a GET route to fetch all documents
 app.get('/data', async (req, res) => {
   try {
-    const examples = await Example.find();
-    res.json(examples);
+    const all_prods = await products.find();
+    res.json(all_prods);
   } catch (err) {
     console.error('Failed to fetch documents:', err);
     res.status(500).send('Failed to fetch documents');
@@ -59,9 +64,9 @@ app.get('/data', async (req, res) => {
 });
 
 // Create a GET route to fetch a single document by ID
-app.get('/data/:id', async (req, res) => {
+app.get('/data/:productName', async (req, res) => {
   try {
-    const example = await Example.findById(req.params.id);
+    const example = await products.findOne({"productName" : req.params.productName});
     if (!example) {
       return res.status(404).send('Document not found');
     }
@@ -101,6 +106,8 @@ app.delete('/data/:id', async (req, res) => {
     res.status(500).send('Failed to delete document');
   }
 });
+
+module.exports = products;
 
 // Start the server
 app.listen(port, () => {

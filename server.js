@@ -5,28 +5,173 @@ const logger = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser')
 const router = require('./routes/index');
-const { auth } = require('express-openid-connect');
 const multer = require('multer')
 const cors = require('cors')
 const mongoose = require("mongoose");
+const { name } = require('ejs');
+const { type } = require('os');
+// import products from './db';
+
 dotenv.load();
 
 const app = express();
 
 
 //Connect to a database
-mongoose.connect("mongodb://localhost:27017/ECommerceDev",  {useNewUrlParser : true, useUnifiedTopology : true}).then(
-  () => {
-    console.log("[*] Connected to database successfully.")
+const uri = 'mongodb://localhost:27017';
+const dbName = 'ECommerceDev';
+
+// Connect to MongoDB using Mongoose
+mongoose.connect(`${uri}/${dbName}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Create a Mongoose Schema
+const Product_Inventory = new mongoose.Schema({
+  productName: {
+    type: String,
+    required: true,
+  },
+  productCategory: {
+    type: String,
+    required: true,
+  },
+  productPrice: {
+    type: Number,
+    required: true,
+  },
+  productDesc: {
+    type: String,
+    required: true,
+  },
+  productFeatures: {
+    type: [{"Feature1 " : String, "Feature2" : String, "Feature3" : String}],
+    required: true,
+  },
+});
+
+//Collection for storing details of all the available products
+const products_available = new mongoose.Schema({
+  productName : {
+    type : String,
+    required : true
+  },
+  productQty : {
+    type : Number, 
+    required : true
+  },
+  sellerName : {
+    type : String, 
+    required : true
+  },
+  status : {
+    type : String,
+    required : true
   }
-).catch((err) => {
-  console.log(err)
 })
 
-//Connection to mongo client
-const db = mongoose.connection;
-var user_details = db.collection("user_details");// create a new collection
-var inventory = db.collection("Product_Inventory");
+//collection to store all the user purchases
+const purchases = new mongoose.Schema({
+  productName : {
+    type : String, 
+    required : true
+  },
+  price  : {
+    type : Number,
+    required : true
+  },
+  userName : {
+    type : String,
+    required : true
+  },
+  dateOfPurchase : {
+    type : Date,
+    required : true
+  },
+  paymentMethod : {
+    type : String,
+    required : true
+  },
+  status : {
+    type : String,
+    required : false
+  }
+})
+
+//collection to store all the user details
+const users = new mongoose.Schema({
+  order_id : {
+    type : Number,
+    required : true
+  },
+  Name : {
+    type : String, 
+  },
+  emailAddr : {
+    type : String, 
+    
+  },
+  phoneNumber : {
+    type : Number, 
+    
+  },
+  addressLine1 : {
+    type : String, 
+   
+  },
+  addressLine2 : {
+    type : String, 
+    
+  },
+  pincode : {
+    type : Number, 
+    
+  },
+  mobNo : {
+    type : Number,  
+  }
+})
+
+//collection to store the status of a particular order
+const trk_status = new mongoose.Schema({
+  order_id : {
+    type : String,
+    required : true
+  },
+  orderDate : {
+    type : Date,
+    required : true
+  },
+  destinationPin : {
+    type : Number,
+    required : true
+  },
+  destinationCity : {
+    type : String,
+    required : true
+  }
+})
+
+//Collection to store the cart details
+const cart_det = new mongoose.Schema({
+  "userName" : {
+    type : String, 
+    required : true
+  },
+  "items" : [String]
+})
+
+
+
+// Create a Mongoose Model
+const products = mongoose.model('products', Product_Inventory);
+const prods_available = mongoose.model('products_available', products_available)
+const user_details = mongoose.model('user_details', users)
+const all_orders = mongoose.model("user_orders", purchases)
+const trackng_status = mongoose.model("order_tracking_status", trk_status)
+const cart = mongoose.model("cart_details", cart_det)
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -49,68 +194,52 @@ if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.
   config.baseURL = `http://localhost:${port}`;
 }
 
-app.use(auth(config));
-
-// Middleware to make the `user` object available for all views
-app.use(function (req, res, next) {
-  res.locals.user = req.oidc.user;
-  next();
-});
-
-app.use('/login', router);
-
-// Error handlers
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: process.env.NODE_ENV !== 'production' ? err : {}
-  });
-});
 
 
 //MY code
-app.get("/", function(req, res){
-  res.json({"Logged In" : req.oidc.isAuthenticated(),
-      "User Details" : req.oidc.user
-  })
-})
+app.get('/data/:name', async (req, res) => {
+  try {
 
-
-app.post("/", function(req, res){
-
-    const products = ["iphone 12", "oneplus 9", "macbook pro", "samsung tv"];
-
-
-    //Query Database to get all products
-    user_details.find({}, function(err, result) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(result['fullName']);
-      }
-    });
-
-
-    var reqItem = req.body.itemName;
-    var isPresent = 0;
-
-    for(let i=0;i<products.length;i++){
-        if(reqItem.toLowerCase() === products[i]){
-            isPresent = 1;
-            res.status = 200;
-            var str = encodeURIComponent(reqItem);
-            res.redirect('/products/' + str);
-        }
+    var catg;
+    
+    if(req.params.name == 'iphone' || req.params.name == 'oneplus 9'){
+        catg = "mobiles"
+        console.log("Foud mobiles")
+        //req.params.name
     }
 
-    //If product is present in inventory response -> 1, else response -> 0
+    var prod_name = req.body.itemName;
+    const example = await products.find({"productCategory" : catg});
+    if (!example) {
+      return res.status(404).send('Document not found');
+    }
+    console.log(example)
+    res.json(example)
+    // res.redirect("/buynow/" + prod_name)
+  } catch (err) {
+    console.error('Failed to fetch document:', err);
+    res.status(500).send('Failed to fetch document');
+  }
 
-    //TO-DO : if product is present return all the names and description of the product as a json array.
+  
+});
 
-    res.json({"Product Status" : isPresent})
-})
-
+//Route to update the cart of a user
+app.put('/updatecart/:name', async (req, res) => {
+  try {
+    // const example = await cart.find({"userName" : req.params.name});
+    
+    const example = await cart.updateOne({"userName" : req.params.name}, {"$push" : {"items" : "iphone12"}}, {new : true});
+    
+    if (!example) {
+      return res.status(404).send('Document not found');
+    }
+    res.json(example);
+  } catch (err) {
+    console.error('Failed to update document:', err);
+    res.status(500).send('Failed to update document');
+  }
+});
 
 
 //Handling form data with multer
@@ -137,33 +266,28 @@ app.post("/settingsUpdate", upload.single('profPic'), function(req, res){
 
   //Inserting the user details to the database
 
-    var new_user_det = {"fullName" : fullName, "emailAddr" : emailAddr, "addrLine1" : addrLine1, "addrLine2" : addrLine2, "pinCode" : pinCode, "mobNo" : mobNo}
-    user_details.insertOne(new_user_det, (err, result) => {
-    if (err) {
-      
-      res.status(500).json({ err: err })
-      return
+    var newUser = {
+      Name : fullName,
+      emailAddr : emailAddr,
+      addressLine1 : addrLine1,
+      addressLine2 : addrLine2,
+      pincode : pinCode,
+      mobNo : mobNo
     }
-    console.log(result)
+
+    user_details.insertMany(newUser)
+
+   // console.log(result)
     res.status(200);
-    res.redirect("/userdetails")
+    res.send("Details Updated Successfully")
     
   })
-
-
-})
 
 
 
 app.get("/product", function(req, res){
     res.end("OK")
 })
-
-app.get('/login', function(req, res){
-    console.log("Login hkj")
-    res.end("OK")
-})
-
 
 
 
