@@ -229,7 +229,7 @@ app.put('/updatecart/:name', async (req, res) => {
   try {
     // const example = await cart.find({"userName" : req.params.name});
     
-    const example = await cart.updateOne({"userName" : req.params.name}, {"$push" : {"items" : "iphone12"}}, {new : true});
+    const example = await cart.updateOne({"userName" : req.params.name}, {"$push" : {"items" : "logitechG502X"}}, {new : true});
     
     if (!example) {
       return res.status(404).send('Document not found');
@@ -240,6 +240,18 @@ app.put('/updatecart/:name', async (req, res) => {
     res.status(500).send('Failed to update document');
   }
 });
+
+//route to send the cart details of a user
+app.get("/getcart/", async function(req, res){
+  try {
+    const examples = await cart.find({"userName" : "Chandu"});
+    console.log("[*] Sent cart information successfully.")
+    res.json(examples);
+  } catch (err) {
+    console.error('Failed to fetch documents:', err);
+    res.status(500).send('Failed to fetch documents');
+  }
+})
 
 
 //Handling form data with multer
