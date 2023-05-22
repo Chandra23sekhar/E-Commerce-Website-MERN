@@ -22,7 +22,7 @@ const updateCart = async (item) => {
    
 	var all_res = {}
     var update_message = "";
-	all_res = await fetch('/updatecart/' + "chan45645664564du", {
+	all_res = await fetch('/updatecart/' + "Chandu", {
         method : 'PUT'
     })
 	all_res = await all_res.json()
@@ -40,7 +40,7 @@ const updateCart = async (item) => {
         document.getElementById('popup_img').src = success
         document.getElementById("cartPopup").style.display = 'block';
         document.getElementById("cartPopup").style.borderColor = 'green';
-        document.getElementById("msg").innerHTML = "Your cart has been updated successfully!"
+        document.getElementById("msg").innerHTML = "Item added to your cart!"
         update_message = "Cart has been updated"
         console.log("Your cart has been updated")
     }
