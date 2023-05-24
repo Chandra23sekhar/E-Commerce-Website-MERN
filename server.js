@@ -101,10 +101,6 @@ const purchases = new mongoose.Schema({
 
 //collection to store all the user details
 const users = new mongoose.Schema({
-  order_id : {
-    type : Number,
-    required : true
-  },
   Name : {
     type : String, 
   },
@@ -159,8 +155,24 @@ const cart_det = new mongoose.Schema({
     type : String, 
     required : true
   },
-  "items" : [String]
+  "items" : [String],
+  
 })
+
+//to store all items with their pricrs
+const item_price = new mongoose.Schema({
+  itemName : {
+    type : String,
+    required : true
+  },
+
+  itemPrice : {
+    type : Number,
+    required : true
+  }
+})
+
+
 
 
 
@@ -171,6 +183,7 @@ const user_details = mongoose.model('user_details', users)
 const all_orders = mongoose.model("user_orders", purchases)
 const trackng_status = mongoose.model("order_tracking_status", trk_status)
 const cart = mongoose.model("cart_details", cart_det)
+const itemPrices = mongoose.model('item_prices', item_price)
 
 
 app.set('views', path.join(__dirname, 'views'));
@@ -225,16 +238,21 @@ app.get('/data/:name', async (req, res) => {
 });
 
 //Route to update the cart of a user
-app.put('/updatecart/:name', async (req, res) => {
+app.put('/updatecart/:name/:addItem', async (req, res) => {
   try {
     // const example = await cart.find({"userName" : req.params.name});
     
-    const example = await cart.updateOne({"userName" : req.params.name}, {"$push" : {"items" : "logitechG502X"}}, {new : true});
+    const example = await cart.findOneAndUpdate({"userName" : req.params.name}, {"$push" : {"items" : req.params.addItem}}, {new : true});
     
     if (!example) {
-      return res.status(404).send('Document not found');
+      //return res.status(404).send('Document not found');
+      const example = await cart.insertMany({"userName" : req.params.name}, {"$push" : {"items" : req.params.addItem}}, {new : true});
+      console.log("Added to new cart")
+      // console.log(example)
+      return res.json({"acknowledged" : true})
+
     }
-    res.json(example);
+    res.json({"acknowledged" : true});
   } catch (err) {
     console.error('Failed to update document:', err);
     res.status(500).send('Failed to update document');
@@ -246,6 +264,30 @@ app.get("/getcart/", async function(req, res){
   try {
     const examples = await cart.find({"userName" : "Chandu"});
     console.log("[*] Sent cart information successfully.")
+    res.json(examples);
+  } catch (err) {
+    console.error('Failed to fetch documents:', err);
+    res.status(500).send('Failed to fetch documents');
+  }
+})
+
+//route to send the item prices
+app.get("/getprices:itemName", async function(req, res){
+  try {
+    const examples = await itemPrices.find({"itemName" : req.params.itemName});
+    console.log("[*] Sent item price information successfully.")
+    res.json(examples);
+  } catch (err) {
+    console.error('Failed to fetch documents:', err);
+    res.status(500).send('Failed to fetch documents');
+  }
+})
+
+//get user details
+app.get("/getuserdet/:name", async function(req, res){
+  try {
+    const examples = await user_details.find({"Name" : req.params.name});
+    console.log("[*] Sent user details information successfully.")
     res.json(examples);
   } catch (err) {
     console.error('Failed to fetch documents:', err);
@@ -294,6 +336,33 @@ app.post("/settingsUpdate", upload.single('profPic'), function(req, res){
     res.send("Details Updated Successfully")
     
   })
+
+
+  //update transaction after the purchase of a rpoduct
+  app.get("/addtransaction/:trans", async function(req, res){
+  //Inserting the user purchases to the database
+  try {
+    await all_orders.insertMany(JSON.parse(req.params.trans))
+    console.log("[*] Added a new transaction.")
+    res.json({"Status" : "OK"})
+  } catch (err) {
+    console.error('Failed to add documents:', err);
+    res.status(500).json({"Status" : "Failed"});
+  }
+  })
+
+// clear the cart of the user after purchasing all items in cart
+app.delete('/removefromcart/:name', async (req, res) => {
+  try {
+    await cart.findOneAndDelete({"userName" : req.params.name});
+    console("deleting")
+    
+    res.status(200).json({'status' : 'Document deleted successfully'});
+  } catch (err) {
+    console.error('Failed to delete document:', err);
+    res.status(500).send('Failed to delete document');
+  }
+});
 
 
 
