@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 function OrderConfirmation(){
     var cartItems = {}
-
+    var final_amt = 0;
     function calcCartTotal(){
         var all_prices = document.getElementsByClassName('item-prices')
         var sum_cart = 0;
         var gst = 0;
         
-        var final_amt = 0;
+        
 
 
         for(let i=0;i<all_prices.length;i++){
@@ -89,7 +89,7 @@ function OrderConfirmation(){
 
             new_transac  = {
                 "productName":prodName,
-                "price":price,
+                "price": final_amt,
                 "userName":userName,
                 "dateOfPurchase":dateOfPurchase,
                 "paymentMethod":paymentMethod,

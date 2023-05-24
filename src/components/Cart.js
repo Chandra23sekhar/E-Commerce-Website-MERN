@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../static/css/cart.css'
+import '../static/css/cart.css'
 import macbook from '../assets/mac-sm-2.jpeg'
 import samTv from '../assets/samsungtv.jpeg'
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 function Cart(){
 
     var cartItems = {};
+    
 
     async function getCart(){
         cartItems = await fetch('/getcart')
@@ -20,9 +21,10 @@ function Cart(){
         //for every item in cart append a new cartItem child div
 
         var container = document.getElementById('cart-cont');
-
-        if(!cartItems[0]){
+        // console.log(cartItems[0].items.length)
+        if(cartItems[0].items.length === 0){
             document.getElementById('if-cart-empty').innerHTML = "Your cart is empty.";
+            document.getElementById('chk-out-btn').style.display = 'none';
         }else{
             for(let i=0;i<cartItems[0].items.length;i++){
                 //update items details and add images for every item

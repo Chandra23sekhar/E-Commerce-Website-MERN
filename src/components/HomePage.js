@@ -54,6 +54,10 @@ const updateCart = async (item) => {
         document.getElementById("cartPopup").style.display = "none";
     }
 
+
+    async function goToBuyNow(item){
+        var ItemDet = fetch('/getitemdetails' + item)
+    }
     return(
         <main id="homePage-main">
             <div className="homepage-trending-products" id="chBg">

@@ -131,4 +131,19 @@
     .odr-con-outer-cont{
         flex-direction: column-reverse;
     }
+
+    .odr-con-usr-det{
+        width: 100vw;
+        align-self: center;
+    }
+
+    .odr-con-odr-det{
+        margin-top: 100px;
+        width: 90vw;
+        align-self: center;
+    }
+
+    #odr-con-main{
+        width: 100vw;
+    }
 }
