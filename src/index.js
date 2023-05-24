@@ -17,6 +17,12 @@ import Navbar from './components/Navbar';
 import SearchBar from "./components/SearchBar";
 import cart from './assets/cart.svg'
 import personFill from './assets/person-circle.svg'
+import mobiles from './components/mobiles';
+import laptops from './components/laptops';
+import buynowps5 from './components/buyps5';
+import buyiphone12 from './components/buyiphone12';
+import buylogiMouse from './components/buylogiMouse';
+import buyhuntsmanMini from './components/buyhuntsmanMini';
 import Footer from './components/Footer';
 import { BrowserRouter as Router, Route, Routes, useNavigate, Link } from "react-router-dom";
 // const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -56,6 +62,12 @@ export default function App() {
 											<Route exact path='/buynow' Component={BuyNow}></Route>
 											<Route exact path = '/orderplaced' Component={OrderPlacedSuccessfully}></Route>
 											<Route exact path='/orderconfirmation' Component={OrderConfirmation}></Route>
+											<Route excat path='/mobiles' Component={mobiles}></Route>
+											<Route excat path='/laptops' Component={laptops}></Route>
+											<Route excat path='/buy/ps5' Component={buynowps5}></Route>
+											<Route excat path='/buy/iphone12' Component={buyiphone12}></Route>
+											<Route excat path='/buy/logitechg502x' Component={buylogiMouse}></Route>
+											<Route excat path='/buy/razerhuntsmanmini' Component={buyhuntsmanMini}></Route>
 											<Route path="*" element={<Err404 />} />
 										</Routes>
 			</Router>

@@ -6,8 +6,18 @@ import { Link } from "react-router-dom";
 import BuyNow from "./BuyNow";
 import { useState, useEffect } from "react";
 
+//import all the images
+import iphone from '../assets/iphone12.jpg'
+import logitech from '../assets/logitech-mouse.jpg_large'
+import razer from '../assets/keyboard-main.jpg'
+import ps5 from '../assets/ps5.jpg'
+import trashIcon from '../assets/trash-fill.svg'
 //get data from database onload
 
+
+// async function removeFromCart(item){
+//     console.log("remove this from cart")
+// }
 
 function Cart(){
 
@@ -28,20 +38,52 @@ function Cart(){
         }else{
             for(let i=0;i<cartItems[0].items.length;i++){
                 //update items details and add images for every item
+                var name = cartItems[0].items[i]
                 var card = document.createElement('div');
                 card.className = 'cart-item-card';
                 
-                var itemDesc = document.createElement('p'); // paragraph for the description of the items
+                var itemDesc = document.createElement('h3'); // paragraph for the description of the items
                 itemDesc.className = 'item-desc-cart';
                 itemDesc.innerHTML = cartItems[0].items[i];
+
+                var itemImg = document.createElement('img');
+                itemImg.className = 'cart-item-img'
+                if(name === 'ps5'){
+                    console.log('ps5')
+                    itemImg.src = ps5
+                  }
+                  else if(name === 'iphone12'){
+                    console.log('iphone12')
+                    itemImg.src = iphone
+                  }
+                  else if(name === 'logitechG502X'){
+                    console.log('mouse')
+                    itemImg.src = logitech
+                  }else{
+                    itemImg.src = razer
+                  }
+
+                // var delFromCart = document.createElement('img');
+                // delFromCart.src = trashIcon 
+                // delFromCart.className = 'del-from-cart-icon'
+                // delFromCart.addEventListener("click", removeFromCart(), false)
+
+
                 card.appendChild(itemDesc)
+                // card.appendChild(delFromCart)
+                card.appendChild(itemImg)
+                
                 container.appendChild(card)
+
+                //add remove from cart option
             }
             
             
             console.log(cartItems[0].items);
         }
     }
+
+    
 
 
     return(

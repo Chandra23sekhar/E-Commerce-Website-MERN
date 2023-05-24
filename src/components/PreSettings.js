@@ -35,10 +35,10 @@ function PreSettings(){
                         </div>
 
                         {/* //Card for logout; */}
-                        <div className='settings-card'>
+                        {/* <div className='settings-card'>
                             <Link to="/logout">Logout</Link>
                             <img src={logout} alt="logout" className='settings-img'></img>
-                        </div>
+                        </div> */}
                 </div>
                 
             </main>

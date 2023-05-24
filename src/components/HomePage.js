@@ -10,6 +10,7 @@ import logiMouse from '../assets/logitech-mouse.jpg_large'
 import keyboard from '../assets/keyboard-main.jpg'
 import close from '../assets/close.png'
 import success from '../assets/success.png'
+import { Link } from "react-router-dom";
 
 var msg = "";
 
@@ -61,7 +62,7 @@ const updateCart = async (item) => {
     return(
         <main id="homePage-main">
             <div className="homepage-trending-products" id="chBg">
-                <h2>Trending</h2>
+                <h2>Trending now!</h2>
             </div>
 
             
@@ -73,12 +74,12 @@ const updateCart = async (item) => {
                             <div className="prod-card-desc">
                             `   <h2>PS5</h2>
                                 <p className="prod-card-price"><span>Price : &#x20B9;</span> 39, 000</p>
-                                <p>feat - 1</p>
+                                {/* <p>feat - 1</p> */}
                             </div>
 
                             <div className="btns-cont">
                                 <button className="btns-homepage" onClick={()=>updateCart('ps5')} name="ps5" value="ps5">Cart</button>
-                                <button className="btns-homepage">Buy Now</button>
+                                <button className="btns-homepage"><Link to='/buy/ps5' className="buy-now-link">Buy Now</Link></button>
                             </div>
             </div>
 
@@ -89,17 +90,17 @@ const updateCart = async (item) => {
                             <h2>Iphone 12</h2>
                             <p className="prod-card-price"><span>Price : &#x20B9;</span> 55, 999</p>
                            
-                                <p>
+                                {/* <p>
                                     feat - 1
                                     feat - 2
                                     feat - 3
-                                </p>
+                                </p> */}
                             </div>
 
                             <div className="btns-cont">
                             
                                 <button className="btns-homepage" name="iphone12" value="iphone12" onClick={()=>updateCart('iphone12')}>Cart</button>
-                                <button className="btns-homepage">Buy Now</button>
+                                <button className="btns-homepage"><Link to='/buy/iphone12' className="buy-now-link">Buy Now</Link></button>
                             </div>
             </div>
 
@@ -111,17 +112,17 @@ const updateCart = async (item) => {
                             <div className="prod-card-desc">
                             <h2>Logitech G502 X</h2>
                             <p className="prod-card-price"><span>Price : &#x20B9;</span> 5, 300</p>
-                                <p>
+                                {/* <p>
                                     feat - 1
                                     feat - 2
                                     feat - 3
-                                </p>
+                                </p> */}
                             </div>
 
                             <div className="btns-cont">
                             
                                 <button className="btns-homepage" name="mouse" value="logitechG502X" onClick={()=>updateCart('logitechG502X')}>Cart</button>
-                                <button className="btns-homepage">Buy Now</button>
+                                <button className="btns-homepage"><Link to='/buy/logitechg502x' className="buy-now-link">Buy Now</Link></button>
                             </div>
             </div>
 
@@ -132,16 +133,16 @@ const updateCart = async (item) => {
                             <div className="prod-card-desc">
                             <h2>Razer Hunstman mini</h2>
                             <p className="prod-card-price"><span>Price : &#x20B9;</span> 9, 999</p>
-                                <p>
+                                {/* <p>
                                     feat - 1
                                     feat - 2
                                     feat - 3
-                                </p>
+                                </p> */}
                             </div>
 
                             <div className="btns-cont">
                                 <button className="btns-homepage" name="keyboard" value="RazerHuntsmanMini" onClick={()=>updateCart('RazerHuntsmanMini')}>Cart</button>
-                                <button className="btns-homepage">Buy Now</button>
+                                <button className="btns-homepage"><Link to='/buy/razerhuntsmanmini' className="buy-now-link">Buy Now</Link></button>
                             </div>
             </div>
         </div>

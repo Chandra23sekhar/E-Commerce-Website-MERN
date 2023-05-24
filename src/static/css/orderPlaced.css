@@ -16,3 +16,9 @@
     top: 20%;
     left: 0%;
   }
+
+  @media screen and (max-width: 1000px){
+    .circle{
+      left: 0px;
+    }
+  }

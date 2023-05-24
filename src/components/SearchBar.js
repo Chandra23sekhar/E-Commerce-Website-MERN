@@ -11,6 +11,15 @@ async function getProds(){
 	all_res = await fetch('/data/' + prd)
 	all_res = await all_res.json()
 
+	console.log(all_res[0].productCategory)
+	if(all_res[0].productCategory === 'mobiles'){
+		window.location.href = "http://localhost:5000/mobiles"
+	}
+	else if(all_res[0].productCategory === 'laptops'){
+		window.location.href = "http://localhost:5000/laptops"
+	}
+	
+
 	console.log(all_res)
 }
 
