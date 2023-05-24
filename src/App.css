@@ -3,10 +3,33 @@
   font-family: 'Imprima', sans-serif;
 }
 
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+/* ::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+  background: #0A4D68;
+  height: 30px;
+} */
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: #00FFCA;
+} */ 
+
 
 body{
   overflow-y: auto !important;
   height: fit-content;
+
+  /*Scroll bar*/
+  
 }
 
 .App{

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css'
 // import App from './App';
-import {Auth0Provider} from '@auth0/auth0-react'
-import reportWebVitals from './reportWebVitals';
 import HomePage from "./components/HomePage";
 import Cart from "./components/Cart";
 import PreSettings from "./components/PreSettings";
@@ -14,6 +12,7 @@ import TrackOrder from "./components/TrackOrder";
 import Err404 from "./components/Err404";
 import BuyNow from './components/BuyNow'
 import OrderConfirmation from './components/OrderConfirmation'
+import OrderPlacedSuccessfully from './components/OrderPlaceSuccessfully'
 import Navbar from './components/Navbar';
 import SearchBar from "./components/SearchBar";
 import cart from './assets/cart.svg'
@@ -55,6 +54,7 @@ export default function App() {
 											<Route exact path='/previousorders' element={<PreviousOrders />}></Route>
 											<Route exact path='/trackyourorder' Component={TrackOrder}></Route>
 											<Route exact path='/buynow' Component={BuyNow}></Route>
+											<Route exact path = '/orderplaced' Component={OrderPlacedSuccessfully}></Route>
 											<Route exact path='/orderconfirmation' Component={OrderConfirmation}></Route>
 											<Route path="*" element={<Err404 />} />
 										</Routes>

@@ -15,11 +15,18 @@ import keyboard_main from '../assets/keyboard-main.jpg'
 import keyboard_sm_1 from '../assets/keyboard-sm-1.jpg'
 import keyboard_sm_2 from '../assets/keyboard-sm-2.jpg'
 
-const changeMainImg = () => {
-    console.log("hello") 
+const changeMainImg = (curImg) => {
+    var mainImgPath = document.getElementById('buy-now-main-img')
+    var tmpPath = mainImgPath.src
+    //console.log("main" + tmpPath)
+    
+    var currImgPath = document.getElementById(curImg)
+    //console.log("curr" + currImgPath)
+    mainImgPath.src = currImgPath.src
+    currImgPath.src = tmpPath
 }
 
-changeMainImg.bind(this, changeMainImg)
+
 
 
 const BuyNow = () => {
@@ -29,9 +36,9 @@ const BuyNow = () => {
                 <img src={macMain} alt='productImage' className='buy-now-prod-main-img' id="buy-now-main-img"></img>
 
                 <div className='buy-now-item-mini-img-cont'>
-                    <img src={macMini1} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-1' ></img>
-                    <img src={macMini2} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-2' ></img>
-                    <img src={macMini3} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-3' ></img>
+                    <img src={macMini1} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-1' onClick={()=>changeMainImg('buy-now-prod-img-1')}></img>
+                    <img src={macMini2} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-2' onClick={()=>changeMainImg('buy-now-prod-img-2')}></img>
+                    <img src={macMini3} alt="productImage-1" className='buy-now-product-mini-image' id='buy-now-prod-img-3' onClick={()=>changeMainImg('buy-now-prod-img-3')}></img>
                 </div>
             </div>
 

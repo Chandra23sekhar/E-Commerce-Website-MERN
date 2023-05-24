@@ -8,9 +8,9 @@ export default function UserDetailsSettings() {
 		<h1>Your Details</h1>
 		<div className='usr-set-outer'>
 			<form method='post' action=' settingsUpdate' encType='multipart/form-data'>
-				<div className='prof-pic-cls'>
+				{/* <div className='prof-pic-cls'>
 					<input type='file' placeholder="upload an image" className='prof-pic' name='profPic'></input>
-				</div>
+				</div> */}
 				<div className='user-new-det'>
 					<label htmlFor='usrName'>Full Name : <input type='text' className='usr-det-inp' name='fullName'></input></label>
 					<label htmlFor='usrName'>Email : <input type='email' className='usr-det-inp' name='usrEmail'></input></label>

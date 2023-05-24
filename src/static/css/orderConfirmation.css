@@ -25,9 +25,9 @@
 }
 
 .odr-con-del-det{
-    height: 150px;
+    padding: 5px 0px 5px 50px;
+    height: fit-content;
     width: 90%;
-    padding: 5px;
     background-color: #ddd;
     align-self: center;
     margin: 10px;
@@ -41,7 +41,7 @@
 .odr-con-del-date{
     height: 150px;
     width: 90%;
-    padding: 5px;
+    padding: 5px 0px 5px 50px;
     background-color: #ddd;
     align-self: center;
     margin: 10px;
@@ -90,7 +90,7 @@
 }
 
 .odr-con-odr-sum{
-    margin-bottom: 150px; 
+    margin-bottom: 50px; 
 }
 
 .odr-con-sep{
@@ -112,6 +112,11 @@
     text-align: center;
 }
 
+
+#total-payable-amount{
+    font-weight: bold;
+    text-decoration: underline;
+}
 
 
 

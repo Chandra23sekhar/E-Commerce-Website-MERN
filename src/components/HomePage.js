@@ -19,14 +19,15 @@ function HomePage(){
 //function to update the cart and display the status message
 const updateCart = async (item) => {
     //call fetch and put the data into the cart
-   
+   console.log(item)
 	var all_res = {}
     var update_message = "";
-	all_res = await fetch('/updatecart/' + "Chandu", {
+	all_res = await fetch('/updatecart/' + "Chandu/" + item, {
         method : 'PUT'
     })
 	all_res = await all_res.json()
 
+    console.log(all_res)
 	if(!all_res.acknowledged){
         update_message = "Oops!! Cart could not be updated please try later."
 
@@ -34,7 +35,7 @@ const updateCart = async (item) => {
         document.getElementById("cartPopup").style.display = 'block';
         document.getElementById("cartPopup").style.borderColor = 'red';
         document.getElementById("msg").innerHTML = "Oops!! Your cart could not be updated."
-        console.log("cart could not be updated" + all_res.ackowledged)
+       // console.log("cart could not be updated" + all_res.ackowledged)
     }else{
 
         document.getElementById('popup_img').src = success
@@ -45,6 +46,7 @@ const updateCart = async (item) => {
         console.log("Your cart has been updated")
     }
 }
+
 
 
 
@@ -71,7 +73,7 @@ const updateCart = async (item) => {
                             </div>
 
                             <div className="btns-cont">
-                                <button className="btns-homepage" onClick={updateCart} name="ps5" value="ps5">Cart</button>
+                                <button className="btns-homepage" onClick={()=>updateCart('ps5')} name="ps5" value="ps5">Cart</button>
                                 <button className="btns-homepage">Buy Now</button>
                             </div>
             </div>
@@ -92,7 +94,7 @@ const updateCart = async (item) => {
 
                             <div className="btns-cont">
                             
-                                <button className="btns-homepage" name="iphone12" value="iphone12">Cart</button>
+                                <button className="btns-homepage" name="iphone12" value="iphone12" onClick={()=>updateCart('iphone12')}>Cart</button>
                                 <button className="btns-homepage">Buy Now</button>
                             </div>
             </div>
@@ -114,7 +116,7 @@ const updateCart = async (item) => {
 
                             <div className="btns-cont">
                             
-                                <button className="btns-homepage" name="mouse" value="logitechG502X">Cart</button>
+                                <button className="btns-homepage" name="mouse" value="logitechG502X" onClick={()=>updateCart('logitechG502X')}>Cart</button>
                                 <button className="btns-homepage">Buy Now</button>
                             </div>
             </div>
@@ -134,7 +136,7 @@ const updateCart = async (item) => {
                             </div>
 
                             <div className="btns-cont">
-                                <button className="btns-homepage" name="keyboard" value="RazerHuntsmanMini">Cart</button>
+                                <button className="btns-homepage" name="keyboard" value="RazerHuntsmanMini" onClick={()=>updateCart('RazerHuntsmanMini')}>Cart</button>
                                 <button className="btns-homepage">Buy Now</button>
                             </div>
             </div>

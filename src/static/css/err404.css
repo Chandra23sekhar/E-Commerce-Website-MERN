@@ -1,7 +1,7 @@
 
 .outer-cont{
     position: absolute;
-    top: 300%;
+    top: 20%;
     left: 40%;
     /* transform: translate(-50%, -50%); */
     flex-direction: column;

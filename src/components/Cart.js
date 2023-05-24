@@ -21,7 +21,7 @@ function Cart(){
 
         var container = document.getElementById('cart-cont');
 
-        if(cartItems[0].items.length == 0){
+        if(!cartItems[0]){
             document.getElementById('if-cart-empty').innerHTML = "Your cart is empty.";
         }else{
             for(let i=0;i<cartItems[0].items.length;i++){
