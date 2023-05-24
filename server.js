@@ -210,23 +210,14 @@ if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.
 
 
 //MY code
-app.get('/data/:name', async (req, res) => {
+app.get('/data/:category', async (req, res) => {
   try {
-
-    var catg;
-    
-    if(req.params.name == 'iphone' || req.params.name == 'oneplus 9'){
-        catg = "mobiles"
-        console.log("Foud mobiles")
-        //req.params.name
-    }
-
     var prod_name = req.body.itemName;
-    const example = await products.find({"productCategory" : catg});
+    const example = await products.find({"productCategory" : req.params.category});
     if (!example) {
       return res.status(404).send('Document not found');
     }
-    console.log(example)
+    //console.log(example)
     res.json(example)
     // res.redirect("/buynow/" + prod_name)
   } catch (err) {
@@ -374,7 +365,7 @@ app.get("/buynow/:item", function(req, res){
 app.get("/getorderdet/:name", async function(req, res){
   try {
     const examples = await all_orders.find({"userName" : req.params.name}).sort({"dateOfPurchase" : -1});
-    console.log("[*] Sent order details information successfully.")
+    console.log("[*] Sent user details information successfully.")
     res.json(examples);
   } catch (err) {
     console.error('Failed to fetch documents:', err);
