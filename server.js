@@ -354,17 +354,33 @@ app.post("/settingsUpdate", upload.single('profPic'), function(req, res){
 // clear the cart of the user after purchasing all items in cart
 app.delete('/removefromcart/:name', async (req, res) => {
   try {
-    await cart.findOneAndDelete({"userName" : req.params.name});
+    await cart.findOneAndUpdate({"userName" : req.params.name}, {"items" : []});
     console("deleting")
     
-    res.status(200).json({'status' : 'Document deleted successfully'});
+    res.status(200).json({'status' : 'ok'});
   } catch (err) {
     console.error('Failed to delete document:', err);
     res.status(500).send('Failed to delete document');
   }
 });
 
+//handle buy now pages
+app.get("/buynow/:item", function(req, res){
+  console.log("link reached" + req.params.item)
+  res.send("OK")
+})
 
+//get details of all the previous orders of a user
+app.get("/getorderdet/:name", async function(req, res){
+  try {
+    const examples = await all_orders.find({"userName" : req.params.name}).sort({"dateOfPurchase" : -1});
+    console.log("[*] Sent order details information successfully.")
+    res.json(examples);
+  } catch (err) {
+    console.error('Failed to fetch documents:', err);
+    res.status(500).send('Failed to fetch documents');
+  }
+})
 
 app.get("/product", function(req, res){
     res.end("OK")
